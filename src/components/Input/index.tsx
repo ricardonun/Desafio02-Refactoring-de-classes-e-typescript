@@ -1,39 +1,37 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import { useField } from "@unform/core";
+import { useEffect, useRef, useState } from "react";
+import { Container } from "./styles";
 
-import { useField } from '@unform/core';
+interface IInputProps{
+  name: string;
+  icon: any;
+  rest: any
+}
 
-import { Container } from './styles';
-
-const Input = ({ name, icon: Icon, ...rest }) => {
-  const inputRef = useRef(null);
-
+export function Input({ name, icon: Icon, ...rest }: any) {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
+  const inputRef = useRef(null);
+
   const { fieldName, defaultValue, registerField } = useField(name);
 
-  const handleInputFocus = useCallback(() => {
+  function handleInputFocus() {
     setIsFocused(true);
-  }, []);
+  }
 
-  const handleInputBlur = useCallback(() => {
+  function handleInputBlur() {
     setIsFocused(false);
-
-    setIsFilled(!!inputRef.current?.value);
-  }, []);
+  }
 
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: inputRef.current,
-      path: 'value',
+      path: "value",
     });
   }, [fieldName, registerField]);
+
 
   return (
     <Container isFilled={isFilled} isFocused={isFocused}>
@@ -48,6 +46,4 @@ const Input = ({ name, icon: Icon, ...rest }) => {
       />
     </Container>
   );
-};
-
-export default Input;
+}

@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+
+interface IContainerProps {
+  openModal: boolean;
+}
 
 export const Container = styled.div`
   background: #c72828;
